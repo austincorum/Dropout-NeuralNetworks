@@ -13,5 +13,5 @@ A real world problem that this can apply to is google searching, someone may be 
 ## Algorithm:
 My goal in reproducing this figure is to test/train the data and calculate the classification error for each probability of p (probability of retaining a unit in the network). My goal is to get p to increase as the error goes down to show that my implementation is valid, and I will tune this hyperparameter to get the same outcome. I will do this by looping through all the training and testing data using a 784-2048-2048-2048-10 architecture and keep the n fixed then change pn to be fixed. I will then gather/write the data into a csv file. This csv file will then contain all the necessary data to output the figures. In this project, I will learn how the dropout rate can benefit the overall error in a neural network.
 
-![Figure] (https://github.com/akc257/Dropout-A-Simple-Way-to-Prevent-Neural-Networks-from-OverfittingNeural-Networks-from-Overfitting/blob/master/DropoutFigure.png)
+![figure](https://github.com/akc257/Dropout-A-Simple-Way-to-Prevent-Neural-Networks-from-OverfittingNeural-Networks-from-Overfitting/blob/master/DropoutFigure.png)
 Figure Referenced from: Srivastava, N.,  Hinton, G.,Krizhevsky, A., Krizhevsky, I., Salakhutdinov, R., Dropout: A Simple Way to Prevent Neural Networks from Overfitting, Figure 9
