@@ -2,5 +2,6 @@
 # python makefile, to run "make" and ENTER
 # ADD * pip install all dependencies *
 
-fig1.png: dropout.py
-    python dropout.py
+run:
+	pip install -r requirements.txt
+	python dropout.py

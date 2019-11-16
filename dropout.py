@@ -1,10 +1,13 @@
 # Dropout: A Simple Way to Prevent Neural Networks from Overfitting
+import input_data
+# Import data
+mnist = input_data.read_data_sets('MNIST_data/', one_hot=True)
+
 import tensorflow as tf
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, LocallyConnected2D
 from tensorflow.keras.utils import to_categorical
-from tensorflow.examples.tutorials.mnist import input_data
 
 
 import pandas as pd
@@ -18,8 +21,6 @@ import os
 # 3 hidden layers are 2048
 # Output layer is 10
 
-# Import data
-mnist = input_data.read_data_sets('/tmp/MNIST_data', one_hot=True)
 # Parameters
 learning_rate = 0.001
 epochs = 2000
@@ -115,7 +116,7 @@ for i in range(iterations):
     train_scores['loss'].append(c)
 
     if i % print_freq == 0:
-        print(f'{i:4d}: train acc {a:.4f}, train loss {c:.5f}')
+        print('{i:4d}: train acc {a:.4f}, train loss {c:.5f}')
 
     a, c = sess.run([accuracy, cross_entropy],
                     feed_dict={X: mnist.test.images, Y: mnist.test.labels,
