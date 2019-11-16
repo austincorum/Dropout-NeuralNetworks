@@ -2,6 +2,7 @@ numpy==1.16.4
 pandas==0.24.2
 matplotlib==2.2.4
 pillow==6.2.0
-tensorflow==2.0.0
+tensorflow==1.15
 scipy==1.2.2
 mnist==0.2.2
+keras==2.3

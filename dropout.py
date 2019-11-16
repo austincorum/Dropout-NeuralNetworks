@@ -4,11 +4,12 @@ import input_data
 mnist = input_data.read_data_sets('MNIST_data/', one_hot=True)
 
 import tensorflow as tf
+import random
+import math
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, LocallyConnected2D
 from tensorflow.keras.utils import to_categorical
-
 
 import pandas as pd
 import os
@@ -20,6 +21,7 @@ import os
 # input layer is 784 = 28*28
 # 3 hidden layers are 2048
 # Output layer is 10
+plt.style.use('seaborn')
 
 # Parameters
 learning_rate = 0.001
@@ -33,6 +35,12 @@ num_classes = 10 # MNIST total classes (0-9 digits)
 
 # dropout - probablility to drop a unit - from 0.1 to 1.0
 dropout = 0.1
+
+# Input data
+# None corresponds to the the number of images in the mini-batch. It will be
+# known at training time
+X = tf.placeholder(tf.float32, [100, 28, 28, 1])  # images 28x28x1 (grayscale)
+Y = tf.placeholder(tf.float32, [100, 10])  # true label
 
 # Dimmensions for intermediary layers
 # Three layers with their channel counts and fully connected layers
@@ -67,10 +75,10 @@ stride = 2  # output is 7x7
 Y3 = tf.nn.relu(tf.nn.conv2d(Y2, W3, strides=[1, stride, stride, 1], padding='SAME') + B3)
 
 # Reshape the output from the third convolution for the fully connected layer
-YY = tf.reshape(Y3, shape=[-1, 10 * M])
+YY = tf.reshape(Y3, shape=[-1, 7 * 7 * M])
 
 Y4 = tf.nn.relu(tf.matmul(YY, W4) + B4)
-Y4d = tf.nn.dropout(Y4, pkeep)
+Y4d = tf.nn.dropout(Y4, prob_keep)
 Ylogits = tf.matmul(Y4d, W5) + B5
 Y_pred = tf.nn.softmax(Ylogits)
 
@@ -111,7 +119,7 @@ for i in range(iterations):
     batch_X, batch_Y = mnist.train.next_batch(100)
 
     a, c = sess.run([accuracy, cross_entropy],
-                    feed_dict={X: batch_X, Y: batch_Y, pkeep: 1})
+                    feed_dict={X: batch_X, Y: batch_Y, prob_keep: 1})
     train_scores['acc'].append(a)
     train_scores['loss'].append(c)
 
@@ -120,7 +128,7 @@ for i in range(iterations):
 
     a, c = sess.run([accuracy, cross_entropy],
                     feed_dict={X: mnist.test.images, Y: mnist.test.labels,
-                               pkeep: 1})
+                               prob_keep: 1})
     test_scores['acc'].append(a)
     test_scores['loss'].append(c)
 
@@ -128,7 +136,7 @@ for i in range(iterations):
     # The iteration number will be used to decay the learning rate
     # Neurons will be dropped with a probability of 25%
     sess.run(train_step, feed_dict={X: batch_X, Y: batch_Y,
-                                    step: i, pkeep: 0.7})
+                                    step: i, prob_keep: 0.7})
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 ax1.plot(train_scores['acc'], lw=0.5)
@@ -147,7 +155,7 @@ plt.show()
 # Check the accuracy in the test set
 a, c = sess.run([accuracy, cross_entropy],
                 feed_dict={X: mnist.test.images, Y: mnist.test.labels,
-                           pkeep: 1})
+                           prob_keep: 1})
 print('Test accuracy {a:.4f}, Test loss {c:.5f}')
 
 # Release the resources when no longer needed
