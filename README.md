@@ -1,5 +1,5 @@
 # Dropout: A Simple Way to Prevent Neural Networks from Overfitting
-In this research project, I will focus on the effects of changing dropout rates on the MNIST dataset. My goal is to reproduce the figure below with the data used in the research paper.
+In this research project, I will focus on the effects of changing dropout rates on the MNIST dataset. My goal is to reproduce the figure below with the data used in the research paper. The purpose of this project is to learn how the machine learning figure was produced. Specifically, learning about the affects to classification error when changing/not changing the dropout probability.
 ![figure](https://github.com/akc257/Dropout-A-Simple-Way-to-Prevent-Neural-Networks-from-OverfittingNeural-Networks-from-Overfitting/blob/master/DropoutFigure.png)
 Figure Referenced from: Srivastava, N.,  Hinton, G.,Krizhevsky, A., Krizhevsky, I., Salakhutdinov, R., Dropout: A Simple Way to Prevent Neural Networks from Overfitting, Figure 9
 
