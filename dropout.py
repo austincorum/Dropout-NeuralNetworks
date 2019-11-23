@@ -40,7 +40,7 @@ model = Sequential()
 model.add(Conv2D(28, kernel_size=(3,3), input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten()) # Flattening the 2D arrays for fully connected layers
-model.add(Dense(200, activation=tf.nn.relu))
+model.add(Dense(10, activation=tf.nn.relu))
 model.add(Dropout(0.6))
 model.add(Dense(10,activation=tf.nn.softmax))
 
@@ -56,14 +56,16 @@ model.evaluate(x_test, y_test)
 # loss, accuracy = model.evaluate(x_test, y_test)
 
 # print "test error: " + "{:.2%}".format(test_error)
-plt.subplot(1, 2, 1)
+plt.subplot(2, 2, 1)
 plt.ylabel('Classification Error %')
 plt.xlabel('Probability of retaining a unit (p)')
+plt.yticks(np.arange(0, 4, 0.5))
 plt.legend(['Test Error', 'Training Error'], loc='upper right')
 
-plt.subplot(1, 2, 2)
+plt.subplot(2, 2, 2)
 plt.ylabel('Classification Error %')
 plt.xlabel('Probability of retaining a unit (p)')
+plt.yticks(np.arange(0, 3.5, 0.5))
 plt.legend(['Test Error', 'Training Error'], loc='upper right')
 
 plt.tight_layout()
