@@ -6,6 +6,7 @@
 import tensorflow as tf
 import random
 import math
+import csv
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Dropout, Flatten, MaxPooling2D
@@ -20,6 +21,13 @@ import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
+
+results = csv.writer('prev_results.csv', delimiter='')
+
+# Write a for loop for calculating values of p and n
+    # in the second figure pn = 256 for the first 2 hidden layer, but
+    # pn = 512 in the last layer
+    # Write values to disk
 
     # print the training data shape
 # print(x_train.shape)
@@ -54,6 +62,7 @@ history = model.fit(x=x_train, y=y_train, validation_split=0.33, epochs=1, batch
 # Returns the loss value and accuracy values for the model
 model.evaluate(x_test, y_test)
 # loss, accuracy = model.evaluate(x_test, y_test)
+
 
 # print "test error: " + "{:.2%}".format(test_error)
 plt.subplot(2, 2, 1)
