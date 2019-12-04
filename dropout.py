@@ -22,7 +22,8 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
 (x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 
-results = csv.writer('prev_results.csv', delimiter='')
+
+# upcoming_results = csv.writer('results.csv', delimiter='')
 
 # Write a for loop for calculating values of p and n
     # in the second figure pn = 256 for the first 2 hidden layer, but
@@ -48,9 +49,10 @@ model = Sequential()
 model.add(Conv2D(28, kernel_size=(3,3), input_shape=input_shape))
 model.add(MaxPooling2D(pool_size=(2, 2)))
 model.add(Flatten()) # Flattening the 2D arrays for fully connected layers
-model.add(Dense(10, activation=tf.nn.relu))
-model.add(Dropout(0.6))
-model.add(Dense(10,activation=tf.nn.softmax))
+model.add(Dense(20, activation=tf.nn.relu))
+model.add(Dense(20, activation=tf.nn.relu))
+model.add(Dropout(0.5))
+model.add(Dense(20,activation=tf.nn.softmax))
 
 # Configure model before training
 model.compile(optimizer='adam',
@@ -58,11 +60,20 @@ model.compile(optimizer='adam',
               metrics=['accuracy'])
 
 # Train the model for a fixed number of epochs
-history = model.fit(x=x_train, y=y_train, validation_split=0.33, epochs=1, batch_size=10)
+history_dropout = model.fit(x=x_train, y=y_train, validation_split=0.1, epochs=1, batch_size=10, verbose=0)
 # Returns the loss value and accuracy values for the model
-model.evaluate(x_test, y_test)
+# model.evaluate(x_test, y_test)
 # loss, accuracy = model.evaluate(x_test, y_test)
 
+# Training accuracy
+    # Training error = 1 - Training accuracy
+accuracy = history_dropout.history['accuracy']
+train_err = 1.00 - accuracy[-1]
+
+# Test Accuracy
+    # Test error = 1 - Test Accuracy
+val_acc = history_dropout.history['val_accuracy']
+test_err = 1.00 - accuracy[-1]
 
 # print "test error: " + "{:.2%}".format(test_error)
 plt.subplot(2, 2, 1)
