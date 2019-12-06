@@ -6,6 +6,9 @@ Figure Referenced from: Srivastava, N.,  Hinton, G.,Krizhevsky, A., Krizhevsky, 
 # How to reproduce analysis:
 - Use command "make" in terminal or command line
 
+## Purpose of Coding Project:
+Exploring the effects of varying values of the tunable hyperparameter 'p' (the probability of retaining a unit in the network) and the number of hidden layers, 'n', that affect error rates. When the product of p and n is fixed, we can see that the magnitude of error for small values of p has reduced (fig. 9a) compared to keeping the number of hidden layers constant (fig. 9b). 
+
 ## Problem Setting:
 With limited training data, many complicated relationships between inputs/outputs will be a result of sampling noise. They will exist in the training set, but not in real test data even if it is drawn from the same distribution. This complication leads to overfitting, this is one of the algorithms to help prevent it from occurring. The input for this figure is a dataset of handwritten digits, and the output after adding dropout are different values that describe the outcome of applying the dropout method. All in all, less error is outcome after adding dropout.
 
