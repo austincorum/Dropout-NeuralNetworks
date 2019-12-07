@@ -96,10 +96,12 @@ def runForAllP():
         errorFigA = runDropout(*constLayer)
         a_test_error.append(errorFigA[0])
         a_train_error.append(errorFigA[1])
-        for i in pValues:    # Store error values for figure b
-            errorFigB = runDropout(*varyLayer)
-            b_test_error.append(errorFigB[0])
-            b_train_error.append(errorFigB[1])
+    for i in pValues:    # Store error values for figure b
+        varyLayer = findValueN(i)
+        constLayer = addPValue(i)
+        errorFigB = runDropout(*varyLayer)
+        b_test_error.append(errorFigB[0])
+        b_train_error.append(errorFigB[1])
     # Figure 9a
     plt.subplot(2, 2, 1)
     plt.ylabel('Classification Error %')
