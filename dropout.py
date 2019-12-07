@@ -16,9 +16,9 @@ import csv
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Dropout, Flatten, MaxPooling2D
 from tensorflow.keras.utils import to_categorical
-# gets rid of l
+# gets rid of an error about cpu on Macbook Pro 2017
 import os
-# os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 
     # Calculating values of p and n for figure 2
 def findValueN(prob):
@@ -31,18 +31,23 @@ def findValueN(prob):
     # return number o
     return n
 
-(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
-    # print the training data shape
-# print(x_train.shape)
+def addPValue(prob):
+    n1 = 2048
+    n2 = 2048
+    n3 = 2048
+    n = [n1,n2,n3,prob]
+    return n
 
+    # Load dataket to appropriate valiables
+(x_train, y_train), (x_test, y_test) = tf.keras.datasets.mnist.load_data()
 # Reshaping the array to 4-dims so that it can work with the API
 x_train = x_train.reshape(x_train.shape[0], 28, 28, 1)
 x_test = x_test.reshape(x_test.shape[0], 28, 28, 1)
 input_shape = (28, 28, 1)
-# Set values to float so that we can get decimal points after division
+    # Set values to float so that we can get decimal points after division
 x_train = x_train.astype('float32')
 x_test = x_test.astype('float32')
-# Normalizing the RGB codes by dividing it to the max RGB value
+    # Normalizing the RGB codes by dividing it to the max RGB value
 x_train /= 255
 x_test /= 255
 
@@ -84,11 +89,14 @@ def float_range(start, stop, step):
     start += decimal.Decimal(step)
 
 def runForAllValuesOfP():
+    constArchetecture = [2048, 2048, 2048]
     pValues = list(float_range(0, 1.0, '0.1'))
     del pValues[0]
     for i in pValues:
-        layer = findValueN(i)
-        dropout(*layer)
+        varyLayer = findValueN(i)
+        constLayer = addPValue(i)
+        dropout(*varyLayer)
+        dropout(*constLayer)
 
 # runs for the list 'layer'
 runForAllValuesOfP()
