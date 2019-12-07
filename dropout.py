@@ -55,12 +55,11 @@ def runDropout(*layer):
     history_dropout = model.fit(x=x_train, y=y_train, validation_split=0.1, epochs=1, batch_size=10)
 
         # Training accuracy
-            # Training error = 1 - Training accuracy
     accuracy = history_dropout.history['accuracy']
     train_err = 1.00 - accuracy[-1]
 
         # Test Accuracy
-            # Test error = 1 - Test Accuracy
+            # Validation accuracy possibly not same as Test accuracy
     val_acc = history_dropout.history['val_accuracy']
     test_err = 1.00 - accuracy[-1]
     # *** Calculate error bars HERE ***
@@ -69,12 +68,12 @@ def runDropout(*layer):
     # END OF RUN DROPOUT #
 
 # Function to calculate all p values in a float range
-def float_range(start, stop, step):
+def floatRange(start, stop, step):
   while start <= stop:
     yield float(start)
     start += decimal.Decimal(step)
 
-def runForAllValuesOfP():
+def runForAllP():
     # lists to store ploting values locally
         # figure a error
     a_test_error = []
@@ -83,7 +82,7 @@ def runForAllValuesOfP():
     b_test_error = []
     b_train_error = []
         # returns the list of p values from 0.1-1.0, into list
-    pValues = list(float_range(0, 1.0, '0.1'))
+    pValues = list(floatRange(0, 1.0, '0.1'))
         # remove 0 from the pValue list
     del pValues[0]
         # run dropout on all values of p for both figures
@@ -139,4 +138,4 @@ x_test /= 255
 # runs both archetectures for all values of p (from 0.1-1.0, inclusive)
 # Currently takes too long to run, but I'm confident that the output will come
     # close to the results in the figure
-runForAllValuesOfP()
+runForAllP()
