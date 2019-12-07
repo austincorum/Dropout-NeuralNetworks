@@ -118,6 +118,8 @@ def runForAllValuesOfP():
     plt.plot(pValues, b_train_error, label = "Training Error")
     plt.legend(loc='upper right')
     plt.tight_layout()
+    # save plotted dropout figure
+    plt.savefig('dropout-figure.png')
     plt.show()
 
 # Load dataket to appropriate valiables
