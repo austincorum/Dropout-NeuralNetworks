@@ -9,7 +9,7 @@ Figure Referenced from: Srivastava, N.,  Hinton, G.,Krizhevsky, A., Krizhevsky, 
 - Best to run in a UNIX/Linux Environment
 
 # Software/Libraries used
-I used TensorFlow to run dropout on the MNIST dataset, Matplotlib to assist in recreating the figure in the paper. I also used a built in Decimal library to calculate the different values of p, from 0.0 to 1.0. The library "csv" was imported for adding previously run data into a CSV file, to save time in computation of already calculated values of p. Lastly, I imported "os" so that I could get rid of an error due to using a CPU rather than a GPU.
+I used TensorFlow to run dropout on the MNIST dataset, Matplotlib to assist in recreating the figure in the paper. I also used a built in Decimal library to calculate the different values of p, from 0.0 to 1.0. The library "csv" was imported for adding previously run data into a CSV file, to save time in computation of already calculated values of p. Numpy was imported to get the plotting to have the same step size on the x and y-axis. Lastly, I imported "os" so that I could get rid of an error due to using a CPU rather than a GPU.
 
 ## Purpose of Coding Project:
 Exploring the effects of varying values of the tunable hyperparameter 'p' (the probability of retaining a unit in the network) and the number of hidden layers, 'n', that affect error rates. When the product of p and n is fixed, we can see that the magnitude of error for small values of p has reduced (fig. 9a) compared to keeping the number of hidden layers constant (fig. 9b).
