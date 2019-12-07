@@ -63,7 +63,7 @@ def runDropout(*layer):
     val_acc = history_dropout.history['val_accuracy']
     test_err = 1.00 - accuracy[-1]
     # *** Calculate error bars HERE ***
-    finalError = [test_error, train_error, layer[3]]
+    finalError = [test_err, train_err, layer[3]]
     return finalError
     # END OF RUN DROPOUT #
 
@@ -78,7 +78,7 @@ def runForAllP():
         # figure a error
     a_test_error = []
     a_train_error = []
-        # figure b
+        # figure b error
     b_test_error = []
     b_train_error = []
         # returns the list of p values from 0.1-1.0, into list
@@ -94,12 +94,12 @@ def runForAllP():
         constLayer = addPValue(i)
             # Store error values for figure a
         errorFigA = runDropout(*constLayer)
-        errorFigA[0].append(a_test_list_y)
-        errorFigA[1].append(a_train_list_y)
-            # Store error values for figure b
-        errorFigB = runDropout(*varyLayer)
-        errorFigA[0].append(b_test_list_y)
-        errorFigA[1].append(b_test_list_y)
+        a_test_error.append(errorFigA[0])
+        a_train_error.append(errorFigA[1])
+        for i in pValues:    # Store error values for figure b
+            errorFigB = runDropout(*varyLayer)
+            b_test_error.append(errorFigB[0])
+            b_train_error.append(errorFigB[1])
     # Figure 9a
     plt.subplot(2, 2, 1)
     plt.ylabel('Classification Error %')
