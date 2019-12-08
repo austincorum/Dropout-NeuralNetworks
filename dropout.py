@@ -39,10 +39,12 @@ def addPValue(prob):
 def runDropout(*layer):
         # Sequential model and the layers that describe the model
     model = Sequential()
-    model.add(Conv2D(28, kernel_size=(5,5), input_shape=input_shape))
+    model.add(Conv2D(28, kernel_size=(3,3), input_shape=input_shape, activation="relu"))
     model.add(MaxPooling2D(pool_size=(2, 2)))
+    model.add(Dropout(layer[3]))
     model.add(Flatten()) # Flattening the 2D arrays for fully connected layers
     model.add(Dense(layer[0], activation=tf.nn.relu))
+    model.add(Dropout(layer[3]))
     model.add(Dense(layer[1], activation=tf.nn.relu))
         # probability to keep value is third index in the list
     model.add(Dropout(layer[3]))
@@ -54,7 +56,7 @@ def runDropout(*layer):
                   metrics=['accuracy'])
 
         # Train the model for a fixed number of epochs
-    history_dropout = model.fit(x=x_train, y=y_train, validation_split=0.1, epochs=1, batch_size=10)
+    history_dropout = model.fit(x=x_train, y=y_train, validation_split=0.1, epochs=10, batch_size=128)
 
         # Training accuracy
     accuracy = history_dropout.history['accuracy']
@@ -63,7 +65,7 @@ def runDropout(*layer):
         # Test Accuracy
             # Validation accuracy possibly not same as Test accuracy
     val_acc = history_dropout.history['val_accuracy']
-    test_err = 100.0 - 100.0*(accuracy[-1])
+    test_err = 100.0 - 100.0*(val_acc[-1])
     # *** Calculate error bars HERE ***
     finalError = [test_err, train_err, layer[3]]
     return finalError
@@ -89,7 +91,7 @@ def runForAllP():
     del pValues[0]
     pValues.append(0.99)
     print(pValues)
-        # run dropout on all values of p for both figures
+    # run dropout on all values of p for both figures
     for i in pValues:
         # check if pValue was already calculated
             # if so, import values and don't run
@@ -100,10 +102,13 @@ def runForAllP():
         errorFigA = runDropout(*constLayer)
         a_test_error.append(errorFigA[0])
         a_train_error.append(errorFigA[1])
-    for i in pValues:    # Store error values for figure b
+        print(a_train_error)
+        print("\n")
+    for i in pValues:
         varyLayer = findValueN(i)
         constLayer = addPValue(i)
         errorFigB = runDropout(*varyLayer)
+        # Store error values for figure b
         b_test_error.append(errorFigB[0])
         b_train_error.append(errorFigB[1])
     # Figure 9a
