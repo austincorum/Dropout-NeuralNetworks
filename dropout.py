@@ -40,15 +40,16 @@ def runDropout(*layer):
         # Sequential model and the layers that describe the model
     model = Sequential()
     model.add(Conv2D(28, kernel_size=(3,3), input_shape=input_shape, activation="relu"))
-    model.add(MaxPooling2D(pool_size=(2, 2)))
-    model.add(Dropout(layer[3]))
+    # model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Flatten()) # Flattening the 2D arrays for fully connected layers
     model.add(Dense(layer[0], activation=tf.nn.relu))
     model.add(Dropout(layer[3]))
     model.add(Dense(layer[1], activation=tf.nn.relu))
-        # probability to keep value is third index in the list
     model.add(Dropout(layer[3]))
-    model.add(Dense(layer[2], activation=tf.nn.softmax))
+    model.add(Dense(layer[2], activation=tf.nn.relu))
+    model.add(Dropout(layer[3]))
+    model.add(Dense(10, activation=tf.nn.softmax))
+
 
         # Configure model before training
     model.compile(optimizer='adam',
@@ -56,7 +57,7 @@ def runDropout(*layer):
                   metrics=['accuracy'])
 
         # Train the model for a fixed number of epochs
-    history_dropout = model.fit(x=x_train, y=y_train, validation_split=0.1, epochs=10, batch_size=128)
+    history_dropout = model.fit(x=x_train, y=y_train, validation_split=0.1, epochs=2, batch_size=32)
 
         # Training accuracy
     accuracy = history_dropout.history['accuracy']
