@@ -57,7 +57,7 @@ def runDropout(*layer):
                   metrics=['accuracy'])
 
         # Train the model for a fixed number of epochs
-    history_dropout = model.fit(x=x_train, y=y_train, validation_split=0.1, epochs=2, batch_size=32)
+    history_dropout = model.fit(x=x_train, y=y_train, validation_split=0.1, epochs=10, batch_size=32)
 
         # Training accuracy
     accuracy = history_dropout.history['accuracy']
