@@ -22,6 +22,7 @@ def findValueN(prob):
     n3 = 512.0/prob
     n = [n1,n2,n3,prob]
         # return number o
+    float(n[3])
     return n
 
 # Create the archetecture for constant archetecture
@@ -31,13 +32,14 @@ def addPValue(prob):
     n2 = 2048
     n3 = 2048
     n = [n1,n2,n3,prob]
+    float(n[3])
     return n
 
 # Runs dropout in an neural network for specific layer values
 def runDropout(*layer):
         # Sequential model and the layers that describe the model
     model = Sequential()
-    model.add(Conv2D(28, kernel_size=(3,3), input_shape=input_shape))
+    model.add(Conv2D(28, kernel_size=(5,5), input_shape=input_shape))
     model.add(MaxPooling2D(pool_size=(2, 2)))
     model.add(Flatten()) # Flattening the 2D arrays for fully connected layers
     model.add(Dense(layer[0], activation=tf.nn.relu))
@@ -56,12 +58,12 @@ def runDropout(*layer):
 
         # Training accuracy
     accuracy = history_dropout.history['accuracy']
-    train_err = 1.00 - accuracy[-1]
+    train_err = 100.0 - 100.0*(accuracy[-1])
 
         # Test Accuracy
             # Validation accuracy possibly not same as Test accuracy
     val_acc = history_dropout.history['val_accuracy']
-    test_err = 1.00 - accuracy[-1]
+    test_err = 100.0 - 100.0*(accuracy[-1])
     # *** Calculate error bars HERE ***
     finalError = [test_err, train_err, layer[3]]
     return finalError
@@ -82,9 +84,11 @@ def runForAllP():
     b_test_error = []
     b_train_error = []
         # returns the list of p values from 0.1-1.0, into list
-    pValues = list(floatRange(0, 1.0, '0.1'))
+    pValues = list(floatRange(0, 0.9, '0.1'))
         # remove 0 from the pValue list
     del pValues[0]
+    pValues.append(0.99)
+    print(pValues)
         # run dropout on all values of p for both figures
     for i in pValues:
         # check if pValue was already calculated
